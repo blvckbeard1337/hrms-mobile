@@ -1,20 +1,80 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, {useContext, useState} from 'react';
+import * as eva from '@eva-design/eva';
+import {EvaIconsPack} from '@ui-kitten/eva-icons';
+import {NavigationContainer} from "@react-navigation/native";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {ApplicationProvider, IconRegistry, Layout, Text} from '@ui-kitten/components';
+import {LoginScreen} from './src/screens/Login';
+import {HomeScreen} from "./src/screens/Home";
+import {AuthProvider, useAuth} from "./src/context/AuthContext";
+import Toast from 'react-native-toast-message';
+import {ThemeContext} from "./src/context/ThemeContext";
+import * as Notifications from "expo-notifications";
+import {NotificationProvider} from "./src/context/NotificationContext";
+import {GeoProvider} from "./src/context/GeoContext";
+import * as TaskManager from "expo-task-manager";
+import * as BackgroundFetch from "expo-background-fetch";
+import {backgroundTask} from "./src/components/BackgroundNotifications";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const Stack = createNativeStackNavigator();
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+Notifications.setNotificationHandler({
+    handleNotification: async () => ({
+        shouldShowAlert: true,
+        shouldPlaySound: false,
+        shouldSetBadge: false,
+    }),
 });
+
+backgroundTask()
+
+export default () => {
+
+    const [theme, setTheme] = useState('light');
+    const toggleTheme = () => {
+        const nextTheme = theme === 'light' ? 'dark' : 'light';
+        setTheme(nextTheme);
+    };
+
+
+    return (
+        <React.Fragment>
+            <IconRegistry icons={[EvaIconsPack]}/>
+            <ThemeContext.Provider value={{
+                theme,
+                toggleTheme,
+            }}>
+                <ApplicationProvider {...eva} theme={eva[theme]}>
+                    <NotificationProvider>
+                        <GeoProvider>
+                            <AuthProvider>
+                                <App/>
+                            </AuthProvider>
+                        </GeoProvider>
+                    </NotificationProvider>
+                </ApplicationProvider>
+            </ThemeContext.Provider>
+        </React.Fragment>
+    )
+};
+
+export const App = () => {
+    const {authState} = useAuth();
+
+    return (
+        <NavigationContainer>
+            <Stack.Navigator screenOptions={{
+                headerShown: false
+            }}>
+                {authState?.authenticated
+                    ? (
+                        <Stack.Screen name="HomeScreen" component={HomeScreen}></Stack.Screen>
+                    )
+                    : (
+                        <Stack.Screen name="Login" component={LoginScreen}></Stack.Screen>
+                    )}
+            </Stack.Navigator>
+            <Toast/>
+        </NavigationContainer>
+    )
+}

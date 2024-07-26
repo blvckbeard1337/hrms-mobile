@@ -12,16 +12,29 @@
       "backgroundColor": "#ffffff"
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "UIBackgroundModes": ["fetch"]
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.blvckbeard.HrmsMobile",
+      "permissions": ["RECEIVE_BOOT_COMPLETED", "WAKE_LOCK"]
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3abcc659-6b44-444a-997b-33b0ff561cae"
+      }
+    },
+    "plugins": [
+      "expo-secure-store"
+    ]
   }
 }
