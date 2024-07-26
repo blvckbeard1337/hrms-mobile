@@ -51,7 +51,7 @@ export const Profile = ({navigation}) => {
                             flexDirection: 'row',
                             justifyContent: 'space-between',
                             padding: 15,
-                            borderBottomColor: theme['color-basic-200'],
+                            borderBottomColor: theme['border-basic-color-2'],
                             borderBottomWidth: 1,
                         }}>
                             <Text style={{

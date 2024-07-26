@@ -3,10 +3,15 @@ import {SafeAreaLayout} from "../../components/SafeAreaLayout";
 import {useState} from "react";
 import {IndexPath, Layout, Select, SelectItem, Text} from "@ui-kitten/components";
 import {StyleSheet} from "react-native";
+import {useTranslation} from "react-i18next";
 
 export const SettingsLanguage = ({navigation}) => {
+    const {i18n} = useTranslation();
     const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
     const languages = ['English', 'Shqip'];
+    async function toggleLanguage() {
+        await i18n.changeLanguage(i18n.language === 'sq' ? 'en' : 'sq')
+    }
 
     return (
         <SafeAreaLayout>

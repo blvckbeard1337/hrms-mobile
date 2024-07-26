@@ -31,7 +31,7 @@ const Home = ({navigation}) => {
                     padding: 15,
                 }}>
                 <Layout style={{
-                    borderColor: theme['color-basic-200'],
+                    borderColor: theme['border-basic-color-2'],
                     borderWidth: 1,
                     borderRadius: 5,
                     marginTop: 15,
@@ -58,7 +58,7 @@ const Home = ({navigation}) => {
                             <ListItem
                                 title={info.item.title}
                                 style={{
-                                    borderBottomColor: theme['color-basic-200'],
+                                    borderBottomColor: theme['border-basic-color-2'],
                                     borderBottomWidth: 1,
                                 }}
                                 description={info.item.description}

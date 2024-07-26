@@ -42,7 +42,6 @@ export const HomeDrawer = ({navigation}) => {
             title: "Logout",
             onPress: async () => {
                 navigation.toggleDrawer()
-                await unregisterBackgroundTimer()
                 onLogout()
             }
         }
