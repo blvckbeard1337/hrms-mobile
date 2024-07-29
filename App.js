@@ -15,7 +15,7 @@ import {GeoProvider} from "./src/context/GeoContext";
 import * as TaskManager from "expo-task-manager";
 import * as BackgroundFetch from "expo-background-fetch";
 import {backgroundTask} from "./src/components/BackgroundNotifications";
-
+import {default as themeColors} from './src/theme/colors.json';
 const Stack = createNativeStackNavigator();
 
 Notifications.setNotificationHandler({
@@ -44,7 +44,7 @@ export default () => {
                 theme,
                 toggleTheme,
             }}>
-                <ApplicationProvider {...eva} theme={eva[theme]}>
+                <ApplicationProvider {...eva} theme={{...eva[theme], ...themeColors}}>
                     <NotificationProvider>
                         <GeoProvider>
                             <AuthProvider>
