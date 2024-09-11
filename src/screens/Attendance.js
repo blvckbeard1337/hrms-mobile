@@ -12,6 +12,8 @@ import {GeoContext} from "../context/GeoContext";
 import Toast from "react-native-toast-message";
 import {unregisterBackgroundTimer, registerBackgroundTimer} from "../components/BackgroundNotifications"
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useSpinner} from "../context/LoaderContext";
+import {useTranslation} from "react-i18next";
 
 const AttendanceStack = createStackNavigator();
 
@@ -30,7 +32,8 @@ const Home = ({navigation}) => {
     const {store, buttons, setButtons, fetch} = useContext(AttendanceContext)
     const {pushNotification} = useContext(NotificationContext)
     const {getCurrentLocation} = useContext(GeoContext)
-
+    const {loading, setLoading} = useSpinner()
+    const {t, i18n} = useTranslation()
     const theme = useTheme();
 
     const toggleActive = async (index) => {
@@ -40,14 +43,14 @@ const Home = ({navigation}) => {
 
         let location = await getCurrentLocation();
 
-/*        if (location === null) {
-            Toast.show({
-                type: 'error',
-                text1: 'Permissions',
-                text2: 'Enable location for this app for attendance to work.'
-            })
-            return;
-        }*/
+        /*        if (location === null) {
+                    Toast.show({
+                        type: 'error',
+                        text1: 'Permissions',
+                        text2: 'Enable location for this app for attendance to work.'
+                    })
+                    return;
+                }*/
 
         if (index === 0 && buttons[0].active) {
             store(index, !buttons[index].active ? 0 : 1, location).then(async res => {
@@ -82,6 +85,7 @@ const Home = ({navigation}) => {
                 await registerBackgroundTimer();
             } else if (nextAppState === 'active') {
                 await unregisterBackgroundTimer()
+
                 fetch()
             }
         };
@@ -103,11 +107,11 @@ const Home = ({navigation}) => {
             if (button.active) {
                 const interval = setInterval(() => {
                     if (index === 0 && button.duration === 300) {
-                        pushNotification("Overtime!", "You're working in overtime session.")
+                        pushNotification(t("Overtime!"), t("You're working in overtime session."))
                     }
 
                     if (index === 1 && button.duration === 100) {
-                        pushNotification("Alert", "You have already used your break")
+                        pushNotification(t("Alert"), t("You have already used your break"))
                     }
 
                     setButtons(prevButtons =>
@@ -156,8 +160,8 @@ const Home = ({navigation}) => {
         <SafeAreaLayout>
             <NavigationMenu navigation={navigation}/>
             <Layout style={{padding: 15, alignItems: 'center'}}>
-                <Text category="h3">Attendance</Text>
-                <Text category="p1">{`${new Date().toLocaleDateString('en-EN', {
+                <Text category="h3">{t("Attendance")}</Text>
+                <Text category="p1">{`${new Date().toLocaleDateString(i18n.language, {
                     weekday: 'long',
                     year: 'numeric',
                     month: 'long',
@@ -173,7 +177,7 @@ const Home = ({navigation}) => {
                         marginTop: 15,
                     }}
                 >
-                    Weekly Schedules
+                    {t("Weekly Schedules")}
                 </Button>
 
                 <Layout style={{
@@ -193,19 +197,19 @@ const Home = ({navigation}) => {
                         }
 
                         if (key === 0) {
-                            button.title = button.active ? 'Mbaro punën' : 'Fillo punën';
+                            button.title = button.active ? t('Mbaro punën') : t('Fillo punën');
                         }
 
                         if (key === 1) {
-                            button.title = button.active ? 'Mbaro pauzën' : 'Fillo pauzën';
+                            button.title = button.active ? t('Mbaro pauzën') : t('Fillo pauzën');
                         }
 
                         if (key === 2) {
-                            button.title = button.active ? 'Kthim zyrtare' : 'Dalje zyrtare';
+                            button.title = button.active ? t('Kthim zyrtare') : t('Dalje zyrtare');
                         }
 
                         if (key === 3) {
-                            button.title = button.active ? 'Kthim private' : 'Dalje private';
+                            button.title = button.active ? t('Kthim private') : t('Dalje private');
                         }
 
                         if (button.active) {

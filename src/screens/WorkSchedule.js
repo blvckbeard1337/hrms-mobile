@@ -6,12 +6,14 @@ import {NavigationMenu} from "../components/NavigationMenu";
 import {SafeAreaLayout} from "../components/SafeAreaLayout";
 import {AttendanceContext} from "../context/AttendanceContext";
 import {useAuth} from "../context/AuthContext";
+import {useTranslation} from "react-i18next";
 
 export const WorkScheduleScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())
     const theme = useTheme()
     const {user} = useAuth();
     const {fetchSchedule, schedule} = useContext(AttendanceContext)
+    const {t, i18n} = useTranslation()
 
     useEffect(() => {
         fetchSchedule(user.id, new Date())
@@ -37,7 +39,7 @@ export const WorkScheduleScreen = ({navigation}) => {
 
     return (
         <SafeAreaLayout>
-            <NavigationMenu navigation={navigation} title="Weekly Schedules"/>
+            <NavigationMenu navigation={navigation} title={t("Weekly Schedules")}/>
             <Layout style={{
                 justifyContent: "center",
                 alignItems: "center",
@@ -45,7 +47,7 @@ export const WorkScheduleScreen = ({navigation}) => {
                 backgroundColor: theme['background-basic-color-2'],
             }}>
                 <Text category="p1">
-                    {date.toLocaleString('default', {month: 'long'})}
+                    {date.toLocaleString(i18n.language, {month: 'long'}).toUpperCase()}
                 </Text>
             </Layout>
             <Layout style={{paddingHorizontal: 15, paddingTop: 15, alignItems: 'center'}}>
@@ -66,7 +68,7 @@ export const WorkScheduleScreen = ({navigation}) => {
                             />
                         }
                     >
-                        Prev
+                        {t('Prev')}
                     </Button>
                     <Button
                         onPress={() => controlsDate()}
@@ -92,11 +94,11 @@ export const WorkScheduleScreen = ({navigation}) => {
                             />
                         }
                     >
-                        Next
+                        {t('Next')}
                     </Button>
                 </Layout>
             </Layout>
-            <Calendar events={schedule} height={600} date={date}/>
+            <Calendar locale={i18n.language} events={schedule} height={600} date={date}/>
         </SafeAreaLayout>
     )
 }

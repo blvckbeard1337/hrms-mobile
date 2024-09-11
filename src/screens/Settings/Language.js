@@ -6,25 +6,33 @@ import {StyleSheet} from "react-native";
 import {useTranslation} from "react-i18next";
 
 export const SettingsLanguage = ({navigation}) => {
-    const {i18n} = useTranslation();
-    const [selectedIndex, setSelectedIndex] = useState(new IndexPath(0));
+    const {i18n, t} = useTranslation();
+    const [selectedIndex, setSelectedIndex] = useState(new IndexPath(
+        i18n.language !== 'en' ? 1 : 0
+    ));
     const languages = ['English', 'Shqip'];
-    async function toggleLanguage() {
-        await i18n.changeLanguage(i18n.language === 'sq' ? 'en' : 'sq')
+    const lang_slug = ['en', 'sq']
+
+    async function toggleLanguage(index) {
+        if (lang_slug[index] !== i18n.language)
+            await i18n.changeLanguage(lang_slug[index])
     }
 
     return (
         <SafeAreaLayout>
-            <NavigationMenu navigation={navigation} title="Langauge"/>
+            <NavigationMenu navigation={navigation} title={t('Language')}/>
             <Layout style={styles.layout}>
                 <Select
-                    label='Select Language'
+                    label={t('Select Language')}
                     selectedIndex={selectedIndex}
-                    onSelect={index => setSelectedIndex(index)}
+                    onSelect={index => {
+                        setSelectedIndex(index)
+                        toggleLanguage(index.row)
+                    }}
                     value={languages[selectedIndex.row]}
                 >
                     {languages.map((language, index) => (
-                        <SelectItem key={index} title={language} />
+                        <SelectItem key={index} title={language}/>
                     ))}
                 </Select>
             </Layout>

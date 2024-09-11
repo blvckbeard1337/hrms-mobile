@@ -6,7 +6,8 @@
     "start": "expo start",
     "android": "expo run:android",
     "ios": "expo run:ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "i18n": "i18next"
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
@@ -46,7 +47,8 @@
     "ui-kitten-toast": "^0.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.20.0"
+    "@babel/core": "^7.20.0",
+    "i18next-parser": "^9.0.1"
   },
   "private": true
 }

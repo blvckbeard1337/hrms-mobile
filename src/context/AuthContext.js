@@ -5,6 +5,7 @@ import Toast from 'react-native-toast-message';
 import {Alert} from "react-native";
 import * as Location from 'expo-location'
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import {useTranslation} from "react-i18next";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const TOKEN_KEY = "jwt"
@@ -15,6 +16,7 @@ export const useAuth = () => {
 }
 
 export const AuthProvider = ({children}) => {
+    const {t} = useTranslation()
     const [authState, setAuthState] = useState({
         token: null,
         authenticated: null
@@ -64,8 +66,8 @@ export const AuthProvider = ({children}) => {
 
             Toast.show({
                 'type': 'success',
-                'text1': 'Congrats',
-                'text2': 'You have successfully logged in',
+                'text1': t('Congrats'),
+                'text2': t('You have successfully logged in'),
             })
 
             await fetchUser()
@@ -75,10 +77,43 @@ export const AuthProvider = ({children}) => {
         } catch (e) {
             Toast.show({
                 'type': 'error',
-                'text1': 'Error',
-                'text2': 'Invalid credentials!',
+                'text1': t('Error'),
+                'text2': t('Invalid credentials!'),
             })
         }
+    }
+
+    const resetPassword = async (email) => {
+        await axios.post(`${API_URL}/auth/forgot`, {
+            email: email
+        })
+            .then(res => Toast.show({
+                "type": "success",
+                "text1": t("Forget password"),
+                "text2": t("Email sent successfully!"),
+            }))
+            .catch(e => Toast.show({
+                'type': 'error',
+                'text1': t('Error'),
+                'text2': t('Email is invalid!'),
+            }));
+    }
+    const changePassword = async (old_pw, pw, pw_confirmation) => {
+        await axios.put(`${API_URL}/auth/password`, {
+            old_password: old_pw,
+            password: pw,
+            password_confirmation: pw_confirmation
+        })
+            .then(res => Toast.show({
+                "type": "success",
+                "text1": t("Congrats"),
+                "text2": t("Password successfully changed!"),
+            }))
+            .catch(e => Toast.show({
+                'type': 'error',
+                'text1': t('Error'),
+                'text2': t('Something went wrong!'),
+            }));
     }
 
     const logout = async () => {
@@ -115,6 +150,8 @@ export const AuthProvider = ({children}) => {
         onLogout: logout,
         authState,
         user,
+        resetPassword,
+        changePassword
     }
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

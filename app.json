@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "HrmsMobile",
+    "name": "HR Nexus",
     "slug": "HrmsMobile",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -14,8 +14,11 @@
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": ["fetch"]
-      }
+        "UIBackgroundModes": [
+          "fetch"
+        ]
+      },
+      "bundleIdentifier": "com.blvckbeard.HrmsMobile"
     },
     "android": {
       "adaptiveIcon": {
@@ -23,7 +26,10 @@
         "backgroundColor": "#ffffff"
       },
       "package": "com.blvckbeard.HrmsMobile",
-      "permissions": ["RECEIVE_BOOT_COMPLETED", "WAKE_LOCK"]
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED",
+        "WAKE_LOCK"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"

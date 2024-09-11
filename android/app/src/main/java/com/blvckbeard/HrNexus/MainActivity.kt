@@ -1,4 +1,4 @@
-package com.blvckbeard.HrmsMobile
+package com.blvckbeard.HrNexus
 
 import android.os.Build
 import android.os.Bundle

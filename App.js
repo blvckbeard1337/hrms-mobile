@@ -16,6 +16,10 @@ import * as TaskManager from "expo-task-manager";
 import * as BackgroundFetch from "expo-background-fetch";
 import {backgroundTask} from "./src/components/BackgroundNotifications";
 import {default as themeColors} from './src/theme/colors.json';
+import {LoaderProvider} from "./src/context/LoaderContext";
+import "./src/localization/i18n";
+
+
 const Stack = createNativeStackNavigator();
 
 Notifications.setNotificationHandler({
@@ -48,7 +52,9 @@ export default () => {
                     <NotificationProvider>
                         <GeoProvider>
                             <AuthProvider>
-                                <App/>
+                                <LoaderProvider>
+                                    <App/>
+                                </LoaderProvider>
                             </AuthProvider>
                         </GeoProvider>
                     </NotificationProvider>

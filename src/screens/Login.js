@@ -12,24 +12,22 @@ import {
 import {KeyboardAvoidingView} from "./extra/3rd-party"
 import {useAuth} from "../context/AuthContext";
 import Toast from "react-native-toast-message";
+import {useTranslation} from "react-i18next";
 
 export const LoginScreen = ({navigation}) => {
-    const {onLogin} = useAuth();
-    const [email, setEmail] = useState('complete@employee.com')
-    const [password, setPassword] = useState('121001')
+    const {onLogin, resetPassword} = useAuth();
+    const [email, setEmail] = useState('')
+    const [password, setPassword] = useState('')
     const [passwordVisible, setPasswordVisible] = useState(false)
     const [forgetPassword, setForgetPassword] = useState(false);
+    const {t} = useTranslation();
 
     const styles = useStyleSheet(themedStyles)
 
     const login = () => {
         if (forgetPassword) {
+            resetPassword(email)
             setForgetPassword(false);
-            Toast.show({
-                "type": "success",
-                "text1": "Forget password",
-                "text2": "Email sent successfully!",
-            })
         } else {
             onLogin(email, password)
         }
@@ -61,10 +59,10 @@ export const LoginScreen = ({navigation}) => {
             {!forgetPassword ? (
                 <Layout style={styles.formContainer} level="1">
                     <Text style={styles.signInLabel} category="h5">
-                        Sign in
+                        {t("Sign in")}
                     </Text>
                     <Input
-                        label={() => <Text style={{marginBottom: 5, fontWeight: "bold"}}>Email</Text>}
+                        label={() => <Text style={{marginBottom: 5, fontWeight: "bold"}}>{t("Email")}</Text>}
                         value={email}
                         size="large"
                         style={{
@@ -75,7 +73,7 @@ export const LoginScreen = ({navigation}) => {
                     <Input
                         style={styles.passwordInput}
                         textStyle={{color: "#000"}}
-                        label={() => <Text style={{marginBottom: 5, fontWeight: 800}}>Password</Text>}
+                        label={() => <Text style={{marginBottom: 5, fontWeight: 800}}>{t("Password")}</Text>}
                         value={password}
                         size="large"
                         secureTextEntry={!passwordVisible}
@@ -88,7 +86,7 @@ export const LoginScreen = ({navigation}) => {
                             status="primary"
                             onPress={() => setForgetPassword(true)}
                         >
-                            Forgot your password?
+                            {t("Forgot your password?")}
                         </Button>
                     </View>
                 </Layout>
@@ -96,10 +94,10 @@ export const LoginScreen = ({navigation}) => {
             ) : (
                 <Layout style={styles.formContainer} level="1">
                     <Text style={styles.signInLabel} category="h5">
-                        Forget password
+                        {t("Forget password")}
                     </Text>
                     <Input
-                        label={() => <Text style={{marginBottom: 5, fontWeight: "bold"}}>Email</Text>}
+                        label={() => <Text style={{marginBottom: 5, fontWeight: "bold"}}>{t("Email")}</Text>}
                         value={email}
                         size="large"
                         style={{
@@ -110,7 +108,7 @@ export const LoginScreen = ({navigation}) => {
                 </Layout>
             )}
             <Button onPress={() => login()} style={styles.signUpButton} size="medium">
-                Continue
+                {t("Continue")}
             </Button>
         </KeyboardAvoidingView>
     )

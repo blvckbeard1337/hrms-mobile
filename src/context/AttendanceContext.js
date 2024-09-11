@@ -1,11 +1,14 @@
 import {createContext, useState} from "react";
 import axios from "axios";
 import Toast from "react-native-toast-message";
+import {useTranslation} from "react-i18next";
 
 export const AttendanceContext = createContext({});
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 
 export const AttendanceProvider = ({children}) => {
+    const {t} = useTranslation()
+
     const [buttons, setButtons] = useState([
         {title: 'Fillo punën', duration: 0, active: false, icon: 'briefcase-outline'},
         {title: 'Fillo pauzën', duration: 0, active: false, icon: 'gift-outline'},
@@ -45,8 +48,8 @@ export const AttendanceProvider = ({children}) => {
             .then(({data}) => {
                 Toast.show({
                     'type': 'success',
-                    'text1': 'Congrats',
-                    'text2': 'Timer has been ' + (check_type === 0 ? 'started' : 'stopped'),
+                    'text1': t('Congrats'),
+                    'text2': t('Timer has been ') + (check_type === 0 ? t('started') : t('stopped')),
                 })
 
                 if (data.data.flags) data.data.flags.forEach(el => {
@@ -54,22 +57,22 @@ export const AttendanceProvider = ({children}) => {
 
                     switch (el['flag']) {
                         case 1:
-                            title = "You have checked in after your working time has stared";
+                            title = t("You have checked in after your working time has stared");
                             break;
                         case 4:
-                            title = "You have checked after your working time has ended";
+                            title = t("You have checked after your working time has ended");
                             break;
                         case 5:
-                            title = "You have checked in outside work location";
+                            title = t("You have checked in outside work location");
                             break;
                         case 6:
-                            title = "You have checked out outside work location";
+                            title = t("You have checked out outside work location");
                             break;
                     }
 
                     if (title !== "") setTimeout(() => Toast.show({
                         'type': 'info',
-                        'text1': 'Warning',
+                        'text1': t('Warning'),
                         'text2': title,
                     }), 1500)
                 })
@@ -77,8 +80,8 @@ export const AttendanceProvider = ({children}) => {
             .catch((err) => {
                 Toast.show({
                     'type': 'error',
-                    'text1': 'Error!',
-                    'text2': 'Something went wrong',
+                    'text1': t('Error!'),
+                    'text2': t('Something went wrong'),
                 })
 
                 console.error("Axios request failed", err.response?.data, err.toJSON());
@@ -130,7 +133,7 @@ export const AttendanceProvider = ({children}) => {
                         }
 
                         return {
-                            'title': `Work ${day_string}`,
+                            'title': `Work`,
                             'start': new Date(day).addTime(event.start_time),
                             'end': new Date(day).addTime(event.end_time),
                         };
@@ -144,7 +147,7 @@ export const AttendanceProvider = ({children}) => {
                     }
 
                     return {
-                        'title': `Work ${day_string}`,
+                        'title': `Work`,
                         'start': new Date(day).addTime(from),
                         'end': new Date(day).addTime(to),
                     };

@@ -1,5 +1,5 @@
 import React, {useContext, useState} from "react"
-import {StyleSheet, View} from "react-native"
+import {StyleSheet, View, Linking} from "react-native"
 import {
     Avatar,
     Divider,
@@ -10,36 +10,38 @@ import {
 } from "@ui-kitten/components"
 import {useAuth} from "../context/AuthContext";
 import {unregisterBackgroundTimer} from "../components/BackgroundNotifications";
+import {useTranslation} from "react-i18next";
 
 export const HomeDrawer = ({navigation}) => {
     const theme = useTheme()
     const [selectedIndex, setSelectedIndex] = useState(null)
     const {user, onLogout} = useAuth()
+    const {t} = useTranslation()
 
     const DATA = [
         {
-            title: "Profile",
+            title: t("Profile"),
             onPress: () => {
                 navigation.toggleDrawer()
                 navigation.navigate("Profile")
             }
         },
         {
-            title: "Settings",
+            title: t("Settings"),
             onPress: () => {
                 navigation.toggleDrawer()
                 navigation.navigate("Settings")
             }
         },
         {
-            title: "Terms and Conditions",
+            title: t("Privacy and Policy"),
             onPress: () => {
-                navigation.toggleDrawer()
-                navigation.navigate("Terms and conditions")
+                Linking.openURL('https://hr-nexus.net/privacy-policy').catch(err => console.error("Failed to open URL: ", err));
+                navigation.toggleDrawer();
             }
         },
         {
-            title: "Logout",
+            title: t("Logout"),
             onPress: async () => {
                 navigation.toggleDrawer()
                 onLogout()

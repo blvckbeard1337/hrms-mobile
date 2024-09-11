@@ -4,14 +4,16 @@ import {Avatar, Layout, useTheme, Text, List, ListItem, Icon} from "@ui-kitten/c
 import {useAuth} from "../context/AuthContext";
 import React from "react";
 import {ImageBackground} from "react-native";
+import {useTranslation} from "react-i18next";
 
 export const Profile = ({navigation}) => {
     const {user} = useAuth();
     const theme = useTheme();
+    const {t} = useTranslation()
 
     return (
         <SafeAreaLayout>
-            <NavigationMenu navigation={navigation} title="Profile"/>
+            <NavigationMenu navigation={navigation} title={t("Profile")}/>
             <Layout
                 style={{
                     backgroundColor: theme['background-basic-color-2'],
@@ -37,14 +39,14 @@ export const Profile = ({navigation}) => {
             <Layout>
                 <List
                     data={[
-                        {name: 'Email', value: user.email},
-                        {name: 'Birthday', value: user.profile.birthdate},
-                        {name: 'Country', value: user.profile.country.name},
-                        {name: 'City', value: user.profile.city.name},
-                        {name: 'Phone', value: user.profile.phone_number},
-                        {name: 'Personal Id', value: user.profile.personal_id},
-                        {name: 'Position', value: user.profile.position.name},
-                        {name: 'Department', value: user.profile.department.name},
+                        {name: t('Email'), value: user.email},
+                        {name: t('Birthday'), value: user.profile.birthdate},
+                        {name: t('Country'), value: user.profile.country.name},
+                        {name: t('City'), value: user.profile.city.name},
+                        {name: t('Phone'), value: user.profile.phone_number},
+                        {name: t('Personal Id'), value: user.profile.personal_id},
+                        {name: t('Position'), value: user.profile.position.name},
+                        {name: t('Department'), value: user.profile.department.name},
                     ]}
                     renderItem={(info) => (
                         <Layout style={{

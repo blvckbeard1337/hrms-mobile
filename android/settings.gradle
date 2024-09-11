@@ -1,4 +1,4 @@
-rootProject.name = 'HrmsMobile'
+rootProject.name = 'HR Nexus'
 
 dependencyResolutionManagement {
   versionCatalogs {

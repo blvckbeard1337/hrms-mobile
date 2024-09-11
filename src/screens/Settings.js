@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {SettingsPassword} from "./Settings/Password";
 import {SettingsTheme} from "./Settings/Theme";
 import {SettingsLanguage} from "./Settings/Language";
+import {useTranslation} from "react-i18next";
 
 const SettingsStack = createNativeStackNavigator();
 
@@ -21,10 +22,11 @@ export const Settings = () => {
 
 const Home = ({navigation}) => {
     const theme = useTheme()
+    const {t} = useTranslation()
 
     return (
         <SafeAreaLayout>
-            <NavigationMenu navigation={navigation} title="Settings"/>
+            <NavigationMenu navigation={navigation} title={t('Settings')}/>
 
             <Layout
                 style={{
@@ -39,18 +41,18 @@ const Home = ({navigation}) => {
                     <List
                         data={[
                             {
-                                title: 'Theme',
-                                description: 'Update color scheme of app.',
+                                title: t('Theme'),
+                                description: t('Update color scheme of app.'),
                                 route: 'Theme'
                             },
                             {
-                                title: 'Password',
-                                description: 'Update account password.',
+                                title: t('Password'),
+                                description: t('Update account password.'),
                                 route: 'Password'
                             },
                             {
-                                title: 'Language',
-                                description: 'Change application language.',
+                                title: t('Language'),
+                                description: t('Change application language.'),
                                 route: 'Language'
                             }
                         ]}

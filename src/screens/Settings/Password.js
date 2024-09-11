@@ -4,57 +4,60 @@ import {Button, Input, Layout, Text} from "@ui-kitten/components";
 import {useState} from "react";
 import {StyleSheet} from "react-native";
 import Toast from "react-native-toast-message";
+import {useTranslation} from "react-i18next";
+import {useAuth} from "../../context/AuthContext";
 
 export const SettingsPassword = ({navigation}) => {
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
+    const {t} = useTranslation()
+    const {changePassword} = useAuth()
 
-    const handleChangePassword = () => {
+    const handleChangePassword = async () => {
         if (currentPassword === '' || newPassword === '' || confirmPassword === '') {
             Toast.show({
                 type: "error",
-                text1: 'Error',
-                text2: 'All fields are required.'
+                text1: t('Error'),
+                text2: t('All fields are required.')
             })
         }
 
         if (newPassword === confirmPassword) {
-            console.log('Password changed successfully');
-            // Perform the password change action (e.g., API call)
+            await changePassword(currentPassword, newPassword, confirmPassword)
         } else {
             Toast.show({
                 type: "error",
-                text1: 'Error',
-                text2: 'Confirm password doesn\'t match!'
+                text1: t('Error'),
+                text2: t('Confirm password doesn\'t match!')
             })
         }
     };
 
     return (
         <SafeAreaLayout>
-            <NavigationMenu navigation={navigation} title="Password"/>
+            <NavigationMenu navigation={navigation} title={t("Password")}/>
             <Layout style={styles.layout}>
 
                 <Input
-                    label='Current Password'
-                    placeholder='Enter your current password'
+                    label={t('Current Password')}
+                    placeholder={t('Enter your current password')}
                     value={currentPassword}
                     secureTextEntry={true}
                     onChangeText={setCurrentPassword}
                     style={styles.input}
                 />
                 <Input
-                    label='New Password'
-                    placeholder='Enter your new password'
+                    label={t('New Password')}
+                    placeholder={t('Enter your new password')}
                     value={newPassword}
                     secureTextEntry={true}
                     onChangeText={setNewPassword}
                     style={styles.input}
                 />
                 <Input
-                    label='Confirm Password'
-                    placeholder='Confirm your new password'
+                    label={t('Confirm Password')}
+                    placeholder={t('Confirm your new password')}
                     value={confirmPassword}
                     secureTextEntry={true}
                     onChangeText={setConfirmPassword}
