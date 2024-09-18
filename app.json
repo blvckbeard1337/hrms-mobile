@@ -18,8 +18,11 @@
           "fetch"
         ]
       },
-      "bundleIdentifier": "com.blvckbeard.HrmsMobile",
-      "buildNumber": "1.1.0"
+      "bundleIdentifier": "com.blvckbeard.HrNexus",
+      "buildNumber": "1.1.0",
+      "runtimeVersion": {
+        "policy": "sdkVersion"
+      }
     },
     "android": {
       "versionCode": 2,
@@ -27,11 +30,12 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.blvckbeard.HrmsMobile",
+      "package": "com.blvckbeard.HrNexus",
       "permissions": [
         "RECEIVE_BOOT_COMPLETED",
         "WAKE_LOCK"
-      ]
+      ],
+      "runtimeVersion": "1.1.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -43,6 +47,9 @@
     },
     "plugins": [
       "expo-secure-store"
-    ]
+    ],
+    "updates": {
+      "url": "https://u.expo.dev/3abcc659-6b44-444a-997b-33b0ff561cae"
+    }
   }
 }
