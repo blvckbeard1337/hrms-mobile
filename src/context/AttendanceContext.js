@@ -84,8 +84,6 @@ export const AttendanceProvider = ({children}) => {
                     'text2': t('Something went wrong'),
                 })
 
-                console.error("Axios request failed", err.response?.data, err.toJSON());
-
                 throw err;
             })
     }

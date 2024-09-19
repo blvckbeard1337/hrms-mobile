@@ -9,7 +9,7 @@ const BACKGROUND_FETCH_TASK = 'notifications';
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 const TOKEN_KEY = "jwt"
 
-const backgroundTask = () => TaskManager.defineTask(BACKGROUND_FETCH_TASK, async () => {
+const backgroundTask =  async () => {
     const token = await SecureStore.getItemAsync(TOKEN_KEY)
 
     if (token) {
@@ -58,7 +58,7 @@ const backgroundTask = () => TaskManager.defineTask(BACKGROUND_FETCH_TASK, async
     }
 
     return BackgroundFetch.BackgroundFetchResult.NewData;
-});
+}
 
 async function registerBackgroundTimer() {
     try {
@@ -80,4 +80,4 @@ async function unregisterBackgroundTimer() {
     }
 }
 
-export {registerBackgroundTimer, unregisterBackgroundTimer, backgroundTask}
+export {registerBackgroundTimer, unregisterBackgroundTimer, backgroundTask, BACKGROUND_FETCH_TASK}

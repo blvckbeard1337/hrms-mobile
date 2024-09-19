@@ -13,8 +13,7 @@ import * as Notifications from "expo-notifications";
 import {NotificationProvider} from "./src/context/NotificationContext";
 import {GeoProvider} from "./src/context/GeoContext";
 import * as TaskManager from "expo-task-manager";
-import * as BackgroundFetch from "expo-background-fetch";
-import {backgroundTask} from "./src/components/BackgroundNotifications";
+import {BACKGROUND_FETCH_TASK, backgroundTask} from "./src/components/BackgroundNotifications";
 import {default as themeColors} from './src/theme/colors.json';
 import {LoaderProvider} from "./src/context/LoaderContext";
 import "./src/localization/i18n";
@@ -30,7 +29,7 @@ Notifications.setNotificationHandler({
     }),
 });
 
-backgroundTask()
+TaskManager.defineTask(BACKGROUND_FETCH_TASK, backgroundTask);
 
 export default () => {
 
