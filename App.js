@@ -18,7 +18,6 @@ import {default as themeColors} from './src/theme/colors.json';
 import {LoaderProvider} from "./src/context/LoaderContext";
 import "./src/localization/i18n";
 
-
 const Stack = createNativeStackNavigator();
 
 Notifications.setNotificationHandler({
@@ -38,7 +37,6 @@ export default () => {
         const nextTheme = theme === 'light' ? 'dark' : 'light';
         setTheme(nextTheme);
     };
-
 
     return (
         <React.Fragment>

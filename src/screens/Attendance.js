@@ -41,6 +41,8 @@ const Home = ({navigation}) => {
             return;
         }
 
+        setLoading(true)
+
         let location = await getCurrentLocation();
 
         /*        if (location === null) {
@@ -62,7 +64,7 @@ const Home = ({navigation}) => {
                 })))
 
                 await AsyncStorage.removeItem("notification")
-            }).catch((e) => console.error(e))
+            }).then(() => setLoading(false)).catch((e) => setLoading(false))
         } else {
             store(index, !buttons[index].active ? 0 : 1, location).then(res => {
                 setButtons(prevButtons =>
@@ -74,19 +76,23 @@ const Home = ({navigation}) => {
                                 : button
                     )
                 );
-            }).catch((e) => console.error(e))
+            }).then(() => setLoading(false)).catch((e) => setLoading(false))
         }
     }
 
     useEffect(() => {
-        const load = () => fetch()
+        const load = () => {
+            setLoading(true)
+            fetch().then(() => setLoading(false)).catch((e) => setLoading(false))
+        }
+
         const handleAppStateChange = async (nextAppState) => {
             if (nextAppState === 'background') {
                 await registerBackgroundTimer();
             } else if (nextAppState === 'active') {
                 await unregisterBackgroundTimer()
 
-                fetch()
+                load()
             }
         };
 

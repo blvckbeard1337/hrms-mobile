@@ -14,9 +14,8 @@
     "ios": {
       "supportsTablet": false,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch"
-        ]
+        "UIBackgroundModes": ["fetch", "remote-notification"],
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to check your attendance."
       },
       "bundleIdentifier": "com.blvckbeard.HrNexus",
       "buildNumber": "1.1.0",
