@@ -18,13 +18,13 @@
         "NSLocationWhenInUseUsageDescription": "This app uses your location to check your attendance."
       },
       "bundleIdentifier": "com.blvckbeard.HrNexus",
-      "buildNumber": "1.1.0",
+      "buildNumber": "1.2.0",
       "runtimeVersion": {
         "policy": "sdkVersion"
       }
     },
     "android": {
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -34,7 +34,7 @@
         "RECEIVE_BOOT_COMPLETED",
         "WAKE_LOCK"
       ],
-      "runtimeVersion": "1.1.0"
+      "runtimeVersion": "1.2.0"
     },
     "web": {
       "favicon": "./assets/favicon.png"
