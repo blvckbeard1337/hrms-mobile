@@ -8,7 +8,7 @@ export const SafeAreaLayout = ({insets, ...props}) => {
     insets = 'top'
     const theme = useTheme()
     const insetsConfig = useSafeAreaInsets()
-    const {loading, setLoading} = useSpinner()
+    const {loading} = useSpinner()
 
     const backgroundColor = theme[`background-basic-color-${props.level}`]
 

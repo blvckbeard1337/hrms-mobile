@@ -7,16 +7,23 @@ import {SafeAreaLayout} from "../components/SafeAreaLayout";
 import {AttendanceContext} from "../context/AttendanceContext";
 import {useAuth} from "../context/AuthContext";
 import {useTranslation} from "react-i18next";
+import {useSpinner} from "../context/LoaderContext";
 
 export const WorkScheduleScreen = ({navigation}) => {
     const [date, setDate] = useState(new Date())
     const theme = useTheme()
     const {user} = useAuth();
+    const {setLoading} = useSpinner();
     const {fetchSchedule, schedule} = useContext(AttendanceContext)
     const {t, i18n} = useTranslation()
 
     useEffect(() => {
-        fetchSchedule(user.id, new Date())
+        const load = () => {
+            setLoading(true)
+            fetchSchedule(user.id, new Date()).then(() => setLoading(false))
+        }
+
+        load()
     }, []);
 
     const controlsDate = async (objective = null) => {
@@ -32,7 +39,8 @@ export const WorkScheduleScreen = ({navigation}) => {
             }
         }
 
-        await fetchSchedule(user.id, new Date(new_date))
+        setLoading(true)
+        await fetchSchedule(user.id, new Date(new_date)).then(() => setLoading(false))
 
         setDate(new_date)
     }

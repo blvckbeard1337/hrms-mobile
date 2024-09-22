@@ -32,7 +32,7 @@ const Home = ({navigation}) => {
     const {store, buttons, setButtons, fetch} = useContext(AttendanceContext)
     const {pushNotification} = useContext(NotificationContext)
     const {getCurrentLocation} = useContext(GeoContext)
-    const {loading, setLoading} = useSpinner()
+    const {setLoading} = useSpinner()
     const {t, i18n} = useTranslation()
     const theme = useTheme();
 
