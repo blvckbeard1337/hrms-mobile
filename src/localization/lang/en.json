@@ -89,5 +89,6 @@
   "You have successfully logged in": "You have successfully logged in",
   "Invalid credentials!": "Invalid credentials!",
   "Email is invalid!": "Email is invalid!",
-  "Password successfully changed": "Password successfully changed."
+  "Password successfully changed": "Password successfully changed.",
+  "Please wait at least 30 seconds before the next action.": "Please wait at least 30 seconds before the next action."
 }

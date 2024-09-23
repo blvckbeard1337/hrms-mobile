@@ -2,6 +2,7 @@ import {createContext, useState} from "react";
 import axios from "axios";
 import Toast from "react-native-toast-message";
 import {useTranslation} from "react-i18next";
+import {useSpinner} from "./LoaderContext";
 
 export const AttendanceContext = createContext({});
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
@@ -17,11 +18,21 @@ export const AttendanceProvider = ({children}) => {
     ]);
 
     const [schedule, setSchedule] = useState([]);
+    const {setLoading} = useSpinner();
 
     const fetch = async () => {
+        setLoading(true)
         await axios.get(`${API_URL}/attendance/current`)
             .then(({data}) => {
-                if (data.data[0])
+                setButtons(prevButtons => prevButtons.map(button => {
+                    return {
+                        ...button, ...{
+                            active: false
+                        }
+                    }
+                }))
+
+                if (data.data[0]) {
                     data.data[0].forEach((item, key) => {
                         setButtons(prevButtons =>
                             prevButtons.map((button, i) =>
@@ -35,7 +46,8 @@ export const AttendanceProvider = ({children}) => {
                             )
                         );
                     })
-            })
+                }
+            }).then(() => setTimeout(() => setLoading(false), 2000))
     }
 
     const store = async (type, check_type, location) => {
@@ -52,7 +64,7 @@ export const AttendanceProvider = ({children}) => {
                     'text2': t('Timer has been ') + (check_type === 0 ? t('started') : t('stopped')),
                 })
 
-                if (data.data.flags) data.data.flags.forEach(el => {
+                if (data?.data?.flags) data.data.flags.forEach(el => {
                     let title = "";
 
                     switch (el['flag']) {
@@ -84,6 +96,7 @@ export const AttendanceProvider = ({children}) => {
                     'text2': t('Something went wrong'),
                 })
 
+                fetch()
                 throw err;
             })
     }

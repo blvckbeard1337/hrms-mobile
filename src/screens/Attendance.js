@@ -41,7 +41,15 @@ const Home = ({navigation}) => {
             return;
         }
 
-        setLoading(true)
+        if (buttons[index].duration <= 30 && buttons[index].active) {
+            Toast.show({
+                'type': 'info',
+                'text1': t('Warning'),
+                'text2': t('Please wait at least 30 seconds before the next action.'),
+            })
+
+            return;
+        }
 
         let location = await getCurrentLocation();
 
@@ -54,51 +62,34 @@ const Home = ({navigation}) => {
                     return;
                 }*/
 
+
         if (index === 0 && buttons[0].active) {
-            store(index, !buttons[index].active ? 0 : 1, location).then(async res => {
-                setButtons(el => el.map(button => ({
-                    ...button,
-                    duration: 0,
-                    active: false,
-                    time: convertSeconds(0)
-                })))
+            await store(index, !buttons[index].active ? 0 : 1, location).then(async res => {
+                fetch()
 
                 await AsyncStorage.removeItem("notification")
-            }).then(() => setLoading(false)).catch((e) => setLoading(false))
+            })
         } else {
-            store(index, !buttons[index].active ? 0 : 1, location).then(res => {
-                setButtons(prevButtons =>
-                    prevButtons.map((button, i) =>
-                        i === index
-                            ? {...button, active: !buttons[index].active}
-                            : index === 0 && !buttons[index].active
-                                ? {...button, active: false}
-                                : button
-                    )
-                );
-            }).then(() => setLoading(false)).catch((e) => setLoading(false))
+            await store(index, !buttons[index].active ? 0 : 1, location).then(res => {
+                fetch()
+            })
         }
     }
 
     useEffect(() => {
-        const load = () => {
-            setLoading(true)
-            fetch().then(() => setLoading(false)).catch((e) => setLoading(false))
-        }
-
         const handleAppStateChange = async (nextAppState) => {
             if (nextAppState === 'background') {
                 await registerBackgroundTimer();
             } else if (nextAppState === 'active') {
                 await unregisterBackgroundTimer()
 
-                load()
+                fetch()
             }
         };
 
         const subscription = AppState.addEventListener('change', handleAppStateChange);
 
-        load()
+        fetch()
 
         return () => {
             subscription.remove();
@@ -227,7 +218,7 @@ const Home = ({navigation}) => {
                                 key={key}
                                 onPress={() => toggleActive(key)}
                                 style={{
-                                    width: button.active || key === 0 ? 171 : 151,
+                                    width: button.active || key === 0 ? "46%" : "43%",
                                     height: 173,
                                     alignItems: 'center',
                                     justifyContent: 'center',
@@ -261,7 +252,8 @@ const Home = ({navigation}) => {
                                     width: '100%'
                                 }}>
                                     <Text style={{
-                                        color: "white"
+                                        color: "white",
+                                        fontSize: 13,
                                     }}>
                                         {button.title}
                                     </Text>
@@ -269,8 +261,8 @@ const Home = ({navigation}) => {
                                         name={!button.active ? 'play-circle-outline' : 'pause-circle-outline'}
                                         fill={!button.active ? theme['color-success-500'] : theme['color-danger-500']}
                                         style={{
-                                            width: 30,
-                                            height: 30,
+                                            width: 25,
+                                            height: 25,
                                         }}
                                     />
                                 </Layout>

@@ -89,5 +89,6 @@
   "You have successfully logged in": "Ju keni hyrë me sukses",
   "Invalid credentials!": "Kredencialet e pavlefshme!",
   "Email is invalid!": "Email-i është i pavlefshme!",
-  "Password successfully changed": "Fjalëkalimi u ndryshua me sukses."
+  "Password successfully changed": "Fjalëkalimi u ndryshua me sukses.",
+  "Please wait at least 30 seconds before the next action.": "Duhet të prisni të paktën 30 sekonda midis veprimeve."
 }
