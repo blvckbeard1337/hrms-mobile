@@ -5,10 +5,7 @@ import {useTranslation} from "react-i18next";
 import {useSpinner} from "./LoaderContext";
 
 export const AttendanceContext = createContext({});
-/*
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
-*/
-const API_URL = 'https://api.hr-nexus.net/api';
 
 export const AttendanceProvider = ({children}) => {
     const {t} = useTranslation()
