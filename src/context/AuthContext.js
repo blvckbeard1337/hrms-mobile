@@ -9,7 +9,6 @@ import {useTranslation} from "react-i18next";
 import {registerBackgroundTimer, unregisterBackgroundTimer} from "../components/BackgroundNotifications";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
-
 const TOKEN_KEY = "jwt"
 const AuthContext = createContext({})
 
