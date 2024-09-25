@@ -10,7 +10,6 @@ import {AttendanceContext, AttendanceProvider} from "../context/AttendanceContex
 import {NotificationContext} from "../context/NotificationContext";
 import {GeoContext} from "../context/GeoContext";
 import Toast from "react-native-toast-message";
-import {unregisterBackgroundTimer, registerBackgroundTimer} from "../components/BackgroundNotifications"
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useSpinner} from "../context/LoaderContext";
 import {useTranslation} from "react-i18next";
@@ -36,6 +35,7 @@ const Home = ({navigation}) => {
     const {t, i18n} = useTranslation()
     const theme = useTheme();
 
+
     const toggleActive = async (index) => {
         if (buttons.find((el, i) => (el.active && i !== index && i !== 0))) {
             return;
@@ -50,6 +50,8 @@ const Home = ({navigation}) => {
 
             return;
         }
+
+        setLoading(true)
 
         let location = await getCurrentLocation();
 
@@ -78,18 +80,12 @@ const Home = ({navigation}) => {
 
     useEffect(() => {
         const handleAppStateChange = async (nextAppState) => {
-            if (nextAppState === 'background') {
-                await registerBackgroundTimer();
-            } else if (nextAppState === 'active') {
-                await unregisterBackgroundTimer()
-
-                fetch()
+             if (nextAppState === 'active') {
+                fetch();
             }
         };
 
         const subscription = AppState.addEventListener('change', handleAppStateChange);
-
-        fetch()
 
         return () => {
             subscription.remove();

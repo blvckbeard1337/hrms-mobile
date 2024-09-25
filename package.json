@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "@eva-design/eva": "^2.2.0",
+    "@expo/config": "^8.1.1",
+    "@expo/metro-config": "^0.10.0",
     "@expo/vector-icons": "^14.0.2",
     "@react-native-async-storage/async-storage": "1.23.1",
     "@react-navigation/bottom-tabs": "^6.5.20",
@@ -22,15 +24,16 @@
     "@ui-kitten/components": "^5.3.1",
     "@ui-kitten/eva-icons": "^5.3.1",
     "axios": "^1.7.2",
-    "expo": "^51.0.32",
+    "expo": "~51.0.34",
     "expo-background-fetch": "~12.0.1",
+    "expo-dev-client": "~4.0.27",
     "expo-device": "~6.0.2",
     "expo-location": "~17.0.1",
     "expo-notifications": "~0.28.17",
     "expo-secure-store": "~13.0.2",
     "expo-status-bar": "~1.12.1",
     "expo-task-manager": "~11.8.2",
-    "expo-updates": "~0.25.24",
+    "expo-updates": "~0.25.25",
     "i18next": "^23.12.2",
     "metro": "^0.80.12",
     "metro-config": "^0.80.12",
@@ -50,10 +53,12 @@
     "react-native-svg": "15.2.0",
     "react-native-toast-message": "^2.2.0",
     "typescript": "~5.3.3",
-    "ui-kitten-toast": "^0.0.2"
+    "ui-kitten-toast": "^0.0.2",
+    "@sentry/react-native": "~5.22.0"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/react-native": "^0.73.0",
     "@ui-kitten/metro-config": "^5.3.1",
     "i18next-parser": "^9.0.1"
   },

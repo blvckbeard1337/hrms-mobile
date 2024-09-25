@@ -6,8 +6,13 @@ import {Alert} from "react-native";
 import * as Location from 'expo-location'
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useTranslation} from "react-i18next";
+import {registerBackgroundTimer, unregisterBackgroundTimer} from "../components/BackgroundNotifications";
 
+/*
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
+*/
+const API_URL = 'https://api.hr-nexus.net/api';
+
 const TOKEN_KEY = "jwt"
 const AuthContext = createContext({})
 
@@ -70,6 +75,8 @@ export const AuthProvider = ({children}) => {
                 'text2': t('You have successfully logged in'),
             })
 
+            await registerBackgroundTimer()
+
             await fetchUser()
 
             await SecureStore.setItemAsync(TOKEN_KEY, result.data.accessToken)
@@ -118,6 +125,8 @@ export const AuthProvider = ({children}) => {
 
     const logout = async () => {
         await SecureStore.deleteItemAsync(TOKEN_KEY)
+
+        await unregisterBackgroundTimer()
 
         axios.defaults.headers.common["Authorization"] = ""
 
