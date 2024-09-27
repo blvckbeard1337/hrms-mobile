@@ -33,14 +33,13 @@
       "versionCode": 5,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#343471"
       },
       "package": "com.blvckbeard.HrNexus",
       "permissions": [
         "RECEIVE_BOOT_COMPLETED",
         "WAKE_LOCK"
       ],
-      "usesCleartextTraffic": true,
       "runtimeVersion": "1.4.0"
     },
     "web": {
